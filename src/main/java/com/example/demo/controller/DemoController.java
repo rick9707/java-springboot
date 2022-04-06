@@ -66,15 +66,14 @@ public class DemoController {
 
     @GetMapping("naver")
     @ResponseBody
-    public Naver naverApi(@RequestParam("name") String name){
+    public String naverApi(@RequestParam("name") String name){
         Naver naver = new Naver(); //Hello객체 생성
-
-        naver.search(name); //파라미터로 넘어온 name을 이용하여 데이터를 넣음
-        return naver; //객체 반환
+ //파라미터로 넘어온 name을 이용하여 데이터를 넣음
+        return naver.search(name); //객체 반환
     }
 
     static class Naver {
-        public void search(String searchWord) {
+        public String search(String searchWord) {
             String text = null;
             try {
                 text = URLEncoder.encode(searchWord, "UTF-8");
@@ -90,6 +89,7 @@ public class DemoController {
             requestHeaders.put("X-Naver-Client-Secret", "LcuKnQsz3r");
             String responseBody = get(apiURL, requestHeaders);
             System.out.println(responseBody);
+            return responseBody;
         }
 
         private String get(String apiUrl, Map<String, String> requestHeaders) {
