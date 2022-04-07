@@ -68,9 +68,10 @@ public class DemoController {
     @ResponseBody
     public String naverApi(@RequestParam("name") String name){
         Naver naver = new Naver(); //Hello객체 생성
- //파라미터로 넘어온 name을 이용하여 데이터를 넣음
-        return naver.search(name); //객체 반환
+        naver.search(name);
+        return naver.search(name);//파라미터로 넘어온 name을 이용하여 데이터를 넣음
     }
+
 
     static class Naver {
         public String search(String searchWord) {
@@ -82,6 +83,7 @@ public class DemoController {
             }
 
             String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text;
+            System.out.println(apiURL);
             // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
             Map<String, String> requestHeaders = new HashMap<>();
@@ -91,7 +93,6 @@ public class DemoController {
             System.out.println(responseBody);
             return responseBody;
         }
-
         private String get(String apiUrl, Map<String, String> requestHeaders) {
             HttpURLConnection con = connect(apiUrl);
             try {
