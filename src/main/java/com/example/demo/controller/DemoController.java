@@ -93,7 +93,6 @@ public class DemoController {
             System.out.println(responseBody);
             return responseBody;
         }
-
         private String get(String apiUrl, Map<String, String> requestHeaders) {
             HttpURLConnection con = connect(apiUrl);
             try {
