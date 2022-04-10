@@ -7,12 +7,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import static org.apache.el.util.MessageFactory.get;
 
@@ -68,7 +66,6 @@ public class DemoController {
     @ResponseBody
     public String naverApi(@RequestParam("name") String name){
         Naver naver = new Naver(); //Hello객체 생성
-        naver.search(name);
         return naver.search(name);//파라미터로 넘어온 name을 이용하여 데이터를 넣음
     }
 
@@ -83,7 +80,6 @@ public class DemoController {
             }
 
             String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text;
-            System.out.println(apiURL);
             // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
             Map<String, String> requestHeaders = new HashMap<>();
@@ -139,4 +135,55 @@ public class DemoController {
             }
         }
     }
+
+
+//    @GetMapping("blog")
+//    @ResponseBody
+//    public String blog(@RequestParam("name") String name){
+//        PostURL postURL = new PostURL(); //Hello객체 생성
+//        postURL(name);
+//        //파라미터로 넘어온 name을 이용하여 데이터를 넣음
+//    }
+//
+//    public class PostURL {
+//        public void search(String) {
+//            try {
+//                String param = "name=" + URLEncoder.encode("미니", "UTF-8");
+//
+//                URL url = new URL(name);
+//                URLConnection conn = url.openConnection();
+//
+//                conn.setDoOutput(true);
+//                conn.setUseCaches(false);
+//                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//
+//                DataOutputStream out = null;
+//
+//                try {
+//                    out = new DataOutputStream(conn.getOutputStream());
+//                    out.writeBytes(param);
+//                    out.flush();
+//                } finally {
+//                    if (out != null) out.close();
+//                }
+//
+//                InputStream is = conn.getInputStream();
+//                Scanner scan = new Scanner(is);
+//
+//                int line = 1;
+//                while (scan.hasNext()) {
+//                    String str = scan.nextLine();
+//                    System.out.println((line++) + ":" + str);
+//                }
+//                scan.close();
+//
+//            } catch (MalformedURLException e) {
+//                System.out.println("The URL address is incorrect.");
+//                e.printStackTrace();
+//            } catch (IOException e) {
+//                System.out.println("It can't connect to the web page.");
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 }
