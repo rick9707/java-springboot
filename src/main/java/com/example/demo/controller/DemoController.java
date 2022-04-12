@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.*;
 import java.net.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import static org.apache.el.util.MessageFactory.get;
 
@@ -87,6 +90,22 @@ public class DemoController {
             requestHeaders.put("X-Naver-Client-Secret", "LcuKnQsz3r");
             String responseBody = get(apiURL, requestHeaders);
             System.out.println(responseBody);
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, Object> map = new HashMap<>();
+            try {
+                map = mapper.readValue(responseBody, Map.class);
+
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+
+            ArrayList<Map<String, Object>> mapList = (ArrayList<Map<String, Object>>) map.get("items");
+            for(int i=0; i < mapList.size(); i++) {
+                System.out.println(mapList.get(i).get("link"));
+                mapList.get(i).put("title", "t");
+                System.out.println(mapList.get(i));
+            }
+
             return responseBody;
         }
         private String get(String apiUrl, Map<String, String> requestHeaders) {
@@ -135,6 +154,8 @@ public class DemoController {
             }
         }
     }
+
+//    class
 
 
 //    @GetMapping("blog")
