@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -102,16 +104,19 @@ public class DemoController {
             ArrayList<Map<String, Object>> mapList = (ArrayList<Map<String, Object>>) map.get("items");
             for (int i = 0; i < mapList.size(); i++) {
                 System.out.println(mapList.get(i).get("link"));
-
-//                mapList.get(i).put("title", "t");
-//                System.out.println(mapList.get(i));
+                String link = (String) mapList.get(i).get("link");
+                String html = getMeta(link);
+                mapList.get(i).put("description", html);
             }
 
 //            String html = getHTML("https://blog.naver.com//PostView.naver?blogId=papakang3156&logNo=222692642625&from=search&redirect=Log&widgetTypeCall=true&directAccess=false");
-            String html = getMeta("https://blog.naver.com/papakang3156?Redirect=Log&logNo=222692642625");
+//            String html = getMeta("https://blog.naver.com/papakang3156?Redirect=Log&logNo=222692642625");
 //            System.out.println(html);
 
-            return html;
+            Gson gson = new Gson();
+            JsonObject json = gson.toJsonTree(map).getAsJsonObject();
+
+            return String.valueOf(json);
         }
 
         private String get(String apiUrl, Map<String, String> requestHeaders) {
@@ -204,7 +209,9 @@ public class DemoController {
 
         // 찾고자 하는 블로그 본문 가져오기
         String real_blog_addr = "div#post-view" + logNo;
-        String blog_element = String.valueOf(doc2.select(real_blog_addr));
+//        String blog_element = String.valueOf(doc2.select(real_blog_addr));
+        String blog_element = doc2.text();
+        String og_image = doc2.select("meta[property=og:image]").get(0).attr("content");
         return blog_element;
     }
 }
