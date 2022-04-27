@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-
 import java.io.*;
 import java.net.*;
 import java.util.*;
@@ -84,7 +83,7 @@ public class DemoController {
                 throw new RuntimeException("검색어 인코딩 실패", e);
             }
 
-            String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text;
+            String apiURL = "https://openapi.naver.com/v1/search/blog?query=" + text + "&display=20";
             // json 결과
             // String apiURL = "https://openapi.naver.com/v1/search/blog.xml?query="+ text; // xml 결과
             Map<String, String> requestHeaders = new HashMap<>();
@@ -203,12 +202,12 @@ public class DemoController {
 //        System.out.println("주소 확인용 : " + url2);
 //        System.out.println("doc2 : " + doc2);
         // 블로그에서 원하는 블로그 페이지 가져오기
-        String[] blog_logNo = src.split("&");
-        String[] logNo_split = blog_logNo[1].split("=");
-        String logNo = logNo_split[1];
+//        String[] blog_logNo = src.split("&");
+//        String[] logNo_split = blog_logNo[1].split("=");
+//        String logNo = logNo_split[1];
 
         // 찾고자 하는 블로그 본문 가져오기
-        String real_blog_addr = "div#post-view" + logNo;
+//        String real_blog_addr = "div#post-view" + logNo;
 //        String blog_element = String.valueOf(doc2.select(real_blog_addr));
         String blog_element = doc2.text();
         String og_image = doc2.select("meta[property=og:image]").get(0).attr("content");
