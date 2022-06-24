@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.io.*;
 import java.net.*;
 import java.util.*;
 
 import static org.apache.el.util.MessageFactory.get;
+
 
 @Controller
 public class DemoController {
@@ -72,6 +75,13 @@ public class DemoController {
         Naver naver = new Naver(); //Hello객체 생성
         return naver.search(name);//파라미터로 넘어온 name을 이용하여 데이터를 넣음
     }
+
+    @GetMapping("/home")
+    @ResponseBody
+    public String getHome(){
+        return "Hello World!";
+    }
+
 
 
     static class Naver {
