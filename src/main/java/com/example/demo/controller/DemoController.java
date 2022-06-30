@@ -118,9 +118,6 @@ public class DemoController {
                 mapList.get(i).put("description", html);
             }
 
-//            String html = getHTML("https://blog.naver.com//PostView.naver?blogId=papakang3156&logNo=222692642625&from=search&redirect=Log&widgetTypeCall=true&directAccess=false");
-//            String html = getMeta("https://blog.naver.com/papakang3156?Redirect=Log&logNo=222692642625");
-//            System.out.println(html);
 
             Gson gson = new Gson();
             JsonObject json = gson.toJsonTree(map).getAsJsonObject();
@@ -180,11 +177,6 @@ public class DemoController {
         try {
             URL url = new URL(urlToRead);
 
-//            System.out.println("url=[" + url + "]");
-//            System.out.println("protocol=[" + url.getProtocol() + "]");
-//            System.out.println("host=[" + url.getHost() + "]");
-//            System.out.println("content=[" + url.getContent() + "]");
-
             InputStream is = url.openStream();
             int ch;
             while ((ch = is.read()) != -1) {
@@ -209,16 +201,6 @@ public class DemoController {
         //진짜 블로그 주소 document 가져오기
         String url2 = "http://blog.naver.com" + src;
         Document doc2 = Jsoup.connect(url2).get();
-//        System.out.println("주소 확인용 : " + url2);
-//        System.out.println("doc2 : " + doc2);
-        // 블로그에서 원하는 블로그 페이지 가져오기
-//        String[] blog_logNo = src.split("&");
-//        String[] logNo_split = blog_logNo[1].split("=");
-//        String logNo = logNo_split[1];
-
-        // 찾고자 하는 블로그 본문 가져오기
-//        String real_blog_addr = "div#post-view" + logNo;
-//        String blog_element = String.valueOf(doc2.select(real_blog_addr));
         String blog_element = doc2.text();
         String og_image = doc2.select("meta[property=og:image]").get(0).attr("content");
         return blog_element;
